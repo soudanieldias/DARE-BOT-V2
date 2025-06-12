@@ -3,7 +3,7 @@ import { Client, EmbedBuilder } from 'discord.js';
 const colors = require('colors');
 require('dotenv').config();
 
-export default class LoggerModule {
+export class Logger {
   private debug: boolean;
   private debugToDev: boolean;
   private developerId: string;
