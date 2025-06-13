@@ -1,7 +1,8 @@
 import { Client, EmbedBuilder } from 'discord.js';
+import colors from 'colors';
 
-const colors = require('colors');
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 export class Logger {
   private debug: boolean;
