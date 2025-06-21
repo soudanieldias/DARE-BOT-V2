@@ -32,9 +32,10 @@ export class CommandLoaderModule {
       const restCommands: CommandData[] = [];
 
       for (const file of commandFiles) {
-        const command: Command = require(`../../${file}`);
+        const commandModule: any = require(`../../${file}`);
+        const command: Command = commandModule.default || commandModule;
 
-        if (!command.data || !command.data.name || !command.data.description) {
+        if (!command?.data || !command.data.name || !command.data.description) {
           await this.client.logger!.warn(
             'Commands',
             `Comando em ${file} não tem a estrutura correta (data, name, description)`,
