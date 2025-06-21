@@ -1,21 +1,10 @@
 import { Client, Collection } from 'discord.js';
-import { intentsList, partialsList } from './config/discord';
-import { Logger } from './utils';
-import { ActivityModule, OnReadyModule } from '@/modules';
+import { intentsList, partialsList } from '@/config/discord';
+import { Logger } from '@/utils';
+import { ActivityModule, OnReadyModule, CommandLoaderModule } from '@/modules';
+import { ClientExtended } from '@/types';
 
 require('dotenv').config();
-
-type ClientExtended = Client & {
-  activityModule?: ActivityModule;
-  onReadyModule?: OnReadyModule;
-  slashCommands?: Collection<string, any>;
-  logger?: Logger;
-  /**
-   * TO-DO: Implementar os módulos abaixo
-   * → Admin, Database, Sound, Soundpad
-   * → Ticket, Embed, Form & Buttons.
-   */
-};
 
 export class App {
   private token: string = process.env.TOKEN || '';
@@ -41,6 +30,7 @@ export class App {
 
   private initializeModules() {
     new OnReadyModule(this.client);
+    new CommandLoaderModule(this.client).loadCommands();
   }
 
   public async start() {

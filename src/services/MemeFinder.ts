@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Logger } from '@/utils';
+import { ClientExtended } from '@/types';
 
 interface RedditPost {
   title: string;
@@ -36,13 +36,13 @@ interface RedditResponse {
 }
 
 export class MemeFinder {
-  private logger: Logger;
   private subreddits: string[] = ['memes', 'dankmemes', 'funny'];
   private lastFetch: { [key: string]: RedditPost[] } = {};
   private lastFetchTime: { [key: string]: number } = {};
+  private client: ClientExtended;
 
-  constructor(logger: Logger) {
-    this.logger = logger;
+  constructor(client: ClientExtended) {
+    this.client = client;
   }
 
   private async fetchFromSubreddit(subreddit: string): Promise<RedditPost[]> {
@@ -70,7 +70,7 @@ export class MemeFinder {
       this.lastFetchTime[subreddit] = Date.now();
       return posts;
     } catch (error) {
-      await this.logger.error(
+      await this.client.logger?.error(
         'MemeFinder',
         `Erro ao buscar memes do r/${subreddit}: ${error}`,
       );

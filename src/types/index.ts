@@ -1,3 +1,7 @@
+import { ActivityModule, OnReadyModule } from '@/modules';
+import { Logger } from '@/utils';
+import { Client, Collection } from 'discord.js';
+
 export interface Command {
   name: string;
   description: string;
@@ -14,3 +18,10 @@ export interface Config {
   prefix: string;
   [key: string]: any;
 }
+
+export type ClientExtended = Client & {
+  activityModule?: ActivityModule;
+  onReadyModule?: OnReadyModule;
+  slashCommands?: Collection<string, any>;
+  logger?: Logger;
+};
