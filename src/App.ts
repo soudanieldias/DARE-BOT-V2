@@ -1,8 +1,13 @@
 import { Client, Collection } from 'discord.js';
 import { intentsList, partialsList } from '@/config/discord';
 import { Logger } from '@/utils';
-import { ActivityModule, OnReadyModule, CommandLoaderModule } from '@/modules';
-import { ClientExtended } from '@/types';
+import {
+  ActivityModule,
+  OnReadyModule,
+  CommandLoaderModule,
+  InteractionModule,
+} from '@/modules';
+import { ClientExtended, CommandData } from '@/types';
 
 require('dotenv').config();
 
@@ -26,6 +31,7 @@ export class App {
     this.client.logger = this.logger;
     this.client.slashCommands = new Collection();
     this.client.activityModule = new ActivityModule(this.client);
+    this.client.interactionModule = new InteractionModule(this.client);
   }
 
   private initializeModules() {
@@ -38,6 +44,10 @@ export class App {
       await this.initializeClient();
       await this.initializeModules();
       await this.client.login(this.token);
+      await this.client.interactionModule!.initialize(
+        this.client as Client<true>,
+        this.client.slashCommands as Collection<string, CommandData>,
+      );
     } catch (error) {
       await this.logger.error('App', `Erro ao iniciar a aplicação: ${error}`);
       throw error;

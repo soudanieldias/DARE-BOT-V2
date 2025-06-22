@@ -6,6 +6,7 @@ yarn.lock
 # Arquivos de ambiente
 .env
 .env.*
+*.env
 !.env.example
 
 # Builds

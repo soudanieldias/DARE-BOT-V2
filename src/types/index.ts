@@ -1,11 +1,26 @@
-import { ActivityModule, OnReadyModule } from '@/modules';
+import { ActivityModule, InteractionModule, OnReadyModule } from '@/modules';
 import { Logger } from '@/utils';
-import { Client, Collection } from 'discord.js';
+import {
+  CacheType,
+  ChatInputCommandInteraction,
+  Client,
+  Collection,
+  SlashCommandOptionsOnlyBuilder,
+} from 'discord.js';
 
 export interface Command {
   name: string;
   description: string;
   execute: (args: string[]) => Promise<void>;
+}
+
+export interface CommandData {
+  data: SlashCommandOptionsOnlyBuilder;
+  categories: string[];
+  execute: (
+    client: Client<true>,
+    interaction: ChatInputCommandInteraction<CacheType>,
+  ) => Promise<void>;
 }
 
 export interface Event {
@@ -21,7 +36,8 @@ export interface Config {
 
 export type ClientExtended = Client & {
   activityModule?: ActivityModule;
+  interactionModule?: InteractionModule;
+  logger?: Logger;
   onReadyModule?: OnReadyModule;
   slashCommands?: Collection<string, any>;
-  logger?: Logger;
 };

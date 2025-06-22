@@ -1,4 +1,5 @@
 // UNDER DEVELOPMENT
 export * from './ActivityModule';
-export * from './OnReadyModule';
 export * from './CommandLoaderModule';
+export * from './InteractionModule';
+export * from './OnReadyModule';
