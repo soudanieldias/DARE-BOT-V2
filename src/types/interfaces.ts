@@ -1,0 +1,70 @@
+import {
+  CacheType,
+  ChatInputCommandInteraction,
+  Client,
+  Collection,
+  SlashCommandOptionsOnlyBuilder,
+  ButtonBuilder,
+} from 'discord.js';
+import { ActivityModule, InteractionModule, OnReadyModule } from '@/modules';
+import { Logger } from '@/utils';
+
+// ===== COMANDOS =====
+export interface Command {
+  name: string;
+  description: string;
+  execute: (args: string[]) => Promise<void>;
+}
+
+export interface CommandData {
+  data: SlashCommandOptionsOnlyBuilder;
+  categories: string[];
+  execute: (
+    client: Client<true>,
+    interaction: ChatInputCommandInteraction<CacheType>,
+  ) => Promise<void>;
+}
+
+// ===== BOTÕES =====
+export interface ButtonData {
+  data: {
+    customId: string;
+    [key: string]: any;
+  };
+  execute: (...args: any[]) => Promise<void>;
+}
+
+// ===== EVENTOS =====
+export interface Event {
+  name: string;
+  execute: (...args: any[]) => Promise<void>;
+}
+
+// ===== CONFIGURAÇÃO =====
+export interface Config {
+  token: string;
+  prefix: string;
+  [key: string]: any;
+}
+
+// ===== CLIENTE EXTENDIDO =====
+export type ClientExtended = Client & {
+  activityModule?: ActivityModule;
+  buttons?: Collection<string, ButtonData>;
+  interactionModule?: InteractionModule;
+  logger?: Logger;
+  onReadyModule?: OnReadyModule;
+  slashCommands?: Collection<string, CommandData>;
+};
+
+// ===== UTILITÁRIOS =====
+export interface ButtonRow {
+  buttons: ButtonBuilder[];
+  maxPerRow: number;
+}
+
+export interface CommandCategory {
+  name: string;
+  description: string;
+  commands: CommandData[];
+}

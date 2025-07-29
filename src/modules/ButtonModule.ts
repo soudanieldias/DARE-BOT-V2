@@ -1,6 +1,6 @@
 import { globSync } from 'glob';
 import { Logger } from '@/utils';
-import { ClientExtended } from '@/types';
+import { ClientExtended, ButtonData } from '@/types';
 import { ButtonBuilder, ButtonStyle, ActionRowBuilder } from 'discord.js';
 import path from 'path';
 import fs from 'fs/promises';
@@ -19,6 +19,7 @@ export class ButtonModule {
     try {
       await this.logger.info('ButtonModule', 'Carregando módulo de Botões.');
 
+      // Procurar por arquivos TypeScript (desenvolvimento) e JavaScript (produção)
       const buttonFiles = [
         ...globSync('./src/buttons/**/*.ts'),
         ...globSync('./dist/buttons/**/*.js'),
@@ -35,9 +36,11 @@ export class ButtonModule {
 
       for (const file of buttonFiles) {
         try {
+          // Usar import dinâmico para carregar o módulo
           const buttonModule = await import(path.resolve(file));
-          const button = buttonModule.default || buttonModule;
+          const button: ButtonData = buttonModule.default || buttonModule;
 
+          // Verificar se o botão tem a estrutura necessária
           if (!button || !button.data || !button.data.customId) {
             await this.logger.warn(
               'ButtonModule',
@@ -48,6 +51,7 @@ export class ButtonModule {
 
           const { customId } = button.data;
 
+          // Verificar se já existe um botão com o mesmo ID
           if (client.buttons?.has(customId)) {
             await this.logger.error(
               'ButtonModule',
@@ -56,6 +60,7 @@ export class ButtonModule {
             continue;
           }
 
+          // Adicionar o botão à coleção
           client.buttons?.set(customId, button);
           await this.logger.info(
             'ButtonModule',
