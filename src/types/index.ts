@@ -36,6 +36,7 @@ export interface Config {
 
 export type ClientExtended = Client & {
   activityModule?: ActivityModule;
+  buttons?: Collection<string, any>;
   interactionModule?: InteractionModule;
   logger?: Logger;
   onReadyModule?: OnReadyModule;

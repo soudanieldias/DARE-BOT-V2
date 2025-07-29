@@ -3,6 +3,7 @@ import { intentsList, partialsList } from '@/config/discord';
 import { Logger } from '@/utils';
 import {
   ActivityModule,
+  ButtonModule,
   OnReadyModule,
   CommandLoaderModule,
   InteractionModule,
@@ -37,6 +38,7 @@ export class App {
   private initializeModules() {
     new OnReadyModule(this.client);
     new CommandLoaderModule(this.client).loadCommands();
+    new ButtonModule(this.client).loadButtons(this.client);
   }
 
   public async start() {
