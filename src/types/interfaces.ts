@@ -6,7 +6,12 @@ import {
   SlashCommandOptionsOnlyBuilder,
   ButtonBuilder,
 } from 'discord.js';
-import { ActivityModule, InteractionModule, OnReadyModule } from '@/modules';
+import {
+  ActivityModule,
+  InteractionModule,
+  OnReadyModule,
+  EmbedModule,
+} from '@/modules';
 import { Logger } from '@/utils';
 
 // ===== COMANDOS =====
@@ -34,6 +39,25 @@ export interface ButtonData {
   execute: (...args: any[]) => Promise<void>;
 }
 
+// ===== EMBEDS =====
+export interface EmbedData {
+  title?: string;
+  description?: string;
+  color?: string;
+  thumbnail?: string;
+  image?: string;
+  footer?: {
+    text: string;
+    iconURL?: string;
+  };
+  timestamp?: Date;
+  fields?: Array<{
+    name: string;
+    value: string;
+    inline?: boolean;
+  }>;
+}
+
 // ===== EVENTOS =====
 export interface Event {
   name: string;
@@ -51,6 +75,7 @@ export interface Config {
 export type ClientExtended = Client & {
   activityModule?: ActivityModule;
   buttons?: Collection<string, ButtonData>;
+  embedModule?: EmbedModule;
   interactionModule?: InteractionModule;
   logger?: Logger;
   onReadyModule?: OnReadyModule;

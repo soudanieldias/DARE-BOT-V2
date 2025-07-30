@@ -7,6 +7,7 @@ import {
   OnReadyModule,
   CommandLoaderModule,
   InteractionModule,
+  EmbedModule,
 } from '@/modules';
 import { ClientExtended, CommandData } from '@/types';
 
@@ -33,6 +34,7 @@ export class App {
     this.client.slashCommands = new Collection();
     this.client.activityModule = new ActivityModule(this.client);
     this.client.interactionModule = new InteractionModule(this.client);
+    this.client.embedModule = new EmbedModule(this.client);
   }
 
   private initializeModules() {
