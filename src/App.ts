@@ -10,8 +10,8 @@ import {
   EmbedModule,
 } from '@/modules';
 import { ClientExtended, CommandData } from '@/types';
-
-require('dotenv').config();
+import { configDotenv } from 'dotenv';
+configDotenv();
 
 export class App {
   private token: string = process.env.TOKEN || '';

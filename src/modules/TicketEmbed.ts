@@ -2,6 +2,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  ColorResolvable,
   EmbedBuilder,
   Guild,
   User,
@@ -151,10 +152,10 @@ export class TicketEmbed extends BaseEmbed {
     };
 
     const actionColors = {
-      warn: '#ffaa00',
-      kick: '#ff6600',
-      ban: '#ff0000',
-      mute: '#ff8800',
+      warn: '#ffaa00' as ColorResolvable,
+      kick: '#ff6600' as ColorResolvable,
+      ban: '#ff0000' as ColorResolvable,
+      mute: '#ff8800' as ColorResolvable,
     };
 
     return this.reset()
@@ -193,7 +194,7 @@ export class TicketEmbed extends BaseEmbed {
       .setInfo()
       .setTitle(title)
       .setDescription(description)
-      .addFields(fields)
+      .addFields(...fields)
       .setTimestamp()
       .build();
   }

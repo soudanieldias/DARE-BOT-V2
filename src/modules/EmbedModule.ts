@@ -92,7 +92,7 @@ export class EmbedModule {
   }
 
   async generate(
-    client: ClientExtended,
+    _client: ClientExtended,
     interaction: ChatInputCommandInteraction<CacheType>,
   ): Promise<void> {
     try {
@@ -157,7 +157,7 @@ export class EmbedModule {
     }
   }
 
-  async send(client: ClientExtended, interaction: Interaction): Promise<void> {
+  async send(_client: ClientExtended, interaction: Interaction): Promise<void> {
     try {
       if (!interaction.channel) {
         throw new Error('Canal inválido');
