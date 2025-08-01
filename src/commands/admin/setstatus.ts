@@ -14,7 +14,7 @@ const command: CommandData = {
     .setName('setstatus')
     .setDescription('Define o status do bot')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('status')
         .setDescription('Status do bot')

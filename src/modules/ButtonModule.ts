@@ -102,7 +102,7 @@ export class ButtonModule {
       return acc;
     }, [] as ButtonBuilder[][]);
 
-    slicedResult.forEach((subArray) => {
+    slicedResult.forEach(subArray => {
       const actionRowBuilder =
         new ActionRowBuilder<ButtonBuilder>().addComponents(subArray);
       allRows.push(actionRowBuilder);
@@ -117,10 +117,10 @@ export class ButtonModule {
   async generateButtons(buttonsPath: string): Promise<ButtonBuilder[]> {
     try {
       const audioFiles = (await fs.readdir(buttonsPath)).filter(
-        (file) => path.extname(file).toLowerCase() === '.mp3',
+        file => path.extname(file).toLowerCase() === '.mp3',
       );
 
-      const fileObjects = audioFiles.map((audio) =>
+      const fileObjects = audioFiles.map(audio =>
         new ButtonBuilder()
           .setCustomId(audio.slice(0, -4))
           .setLabel(audio.slice(0, -4))

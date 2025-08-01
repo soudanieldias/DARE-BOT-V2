@@ -57,7 +57,7 @@ export class MemeFinder {
       );
 
       const posts = response.data.data.children
-        .map((post) => post.data)
+        .map(post => post.data)
         .filter((post: RedditPost) => {
           // Filtra apenas imagens e GIFs
           return (

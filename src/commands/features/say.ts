@@ -15,13 +15,13 @@ const command: CommandData = {
     .setName('say')
     .setDescription('Faça eu falar')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('mensagem')
         .setDescription('Escreva algo para ser enviado.')
         .setRequired(true),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('tipo')
         .setDescription('Escolha o tipo de mensagem')
@@ -31,24 +31,24 @@ const command: CommandData = {
           { name: 'Mensagem', value: 'mensagem' },
         ),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('imagem')
         .setDescription('URL de uma imagem para adicionar ao embed (opcional)'),
     )
-    .addRoleOption((option) =>
+    .addRoleOption(option =>
       option
         .setName('cargo')
         .setDescription('Selecione um cargo para mencionar (opcional)')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('cor')
         .setDescription('Cor do embed (hexadecimal)')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('título')
         .setDescription('Título do embed (opcional)')

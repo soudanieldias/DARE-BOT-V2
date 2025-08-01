@@ -165,10 +165,10 @@ export class TicketEmbed extends BaseEmbed {
           action === 'warn'
             ? 'Advertido'
             : action === 'kick'
-            ? 'Expulso'
-            : action === 'ban'
-            ? 'Banido'
-            : 'Silenciado'
+              ? 'Expulso'
+              : action === 'ban'
+                ? 'Banido'
+                : 'Silenciado'
         }`,
       )
       .addField('Usuário', `${user} (${user.id})`, true)
@@ -184,7 +184,7 @@ export class TicketEmbed extends BaseEmbed {
     description: string,
     commands: Array<{ name: string; description: string; usage?: string }>,
   ): EmbedBuilder {
-    const fields = commands.map((cmd) => ({
+    const fields = commands.map(cmd => ({
       name: `/${cmd.name}`,
       value: `${cmd.description}${cmd.usage ? `\nUso: ${cmd.usage}` : ''}`,
       inline: true,

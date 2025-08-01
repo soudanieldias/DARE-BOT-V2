@@ -13,49 +13,49 @@ const command: CommandData = {
     .setName('embed')
     .setDescription('Cria um embed personalizado')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('título')
         .setDescription('Título do embed')
         .setRequired(true),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('descrição')
         .setDescription('Descrição do embed')
         .setRequired(true),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('cor')
         .setDescription('Cor do embed (hexadecimal)')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('imagem')
         .setDescription('URL de uma imagem para adicionar ao embed')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('miniatura')
         .setDescription('URL de uma miniatura para o embed')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('campo1')
         .setDescription('Primeiro campo do embed')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('campo2')
         .setDescription('Segundo campo do embed')
         .setRequired(false),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('rodapé')
         .setDescription('Texto do rodapé')

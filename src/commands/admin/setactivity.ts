@@ -14,7 +14,7 @@ const command: CommandData = {
     .setName('setactivity')
     .setDescription('Define a atividade do bot')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('activity')
         .setDescription('Tipo de atividade')
@@ -27,13 +27,13 @@ const command: CommandData = {
           { name: 'Competindo', value: 'COMPETING' },
         ),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('name')
         .setDescription('Nome da atividade')
         .setRequired(true),
     )
-    .addStringOption((option) =>
+    .addStringOption(option =>
       option
         .setName('url')
         .setDescription('URL para streaming (apenas para STREAMING)')

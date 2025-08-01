@@ -11,7 +11,7 @@ export class OnReadyModule {
     this.setupReadyEvent();
   }
 
-  private setupReadyEvent() {
+  private setupReadyEvent(): void {
     this.client.once('ready', async () => {
       const discriminator = this.client.user?.discriminator;
       const username = this.client.user?.username;

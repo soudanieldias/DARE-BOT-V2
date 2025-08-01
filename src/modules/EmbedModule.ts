@@ -228,7 +228,9 @@ export class EmbedModule {
     items: string[],
     itemPrefix: string = '•',
   ): this {
-    const listText = items.map((item) => `${itemPrefix} ${item}`).join('\n');
+    const listText = items
+      .map((item: string) => `${itemPrefix} ${item}`)
+      .join('\n');
     return this.setTitle(title).setDescription(listText).setColor('#0099ff');
   }
 
