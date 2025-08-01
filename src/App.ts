@@ -29,7 +29,7 @@ export class App {
     }
   }
 
-  private initializeClient() {
+  private initializeClient(): void {
     this.client.logger = this.logger;
     this.client.slashCommands = new Collection();
     this.client.activityModule = new ActivityModule(this.client);
@@ -37,13 +37,13 @@ export class App {
     this.client.embedModule = new EmbedModule(this.client);
   }
 
-  private initializeModules() {
+  private initializeModules(): void {
     new OnReadyModule(this.client);
     new CommandLoaderModule(this.client).loadCommands();
     new ButtonModule(this.client).loadButtons(this.client);
   }
 
-  public async start() {
+  public async start(): Promise<void> {
     try {
       await this.initializeClient();
       await this.initializeModules();

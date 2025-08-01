@@ -1,11 +1,11 @@
-import { Client } from 'discord.js';
+import { ClientExtended } from '@/types';
 import { Logger } from '@/utils';
 
 export class OnReadyModule {
-  private client: Client;
+  private client: ClientExtended;
   private logger: Logger;
 
-  constructor(client: Client) {
+  constructor(client: ClientExtended) {
     this.client = client;
     this.logger = new Logger(client);
     this.setupReadyEvent();
@@ -30,7 +30,7 @@ export class OnReadyModule {
         ------------------------------
         |  SERVIDORES ONDE EU ESTOU:
         |  ${this.client.guilds.cache
-          .map((guild) => guild.name)
+          .map(guild => guild.name)
           .join('\n      |  ')}
         ------------------------------
         `,
