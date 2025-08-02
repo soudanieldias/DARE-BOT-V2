@@ -9,7 +9,7 @@ export class CommandModule {
     this.logger = new Logger(client);
   }
 
-  async loadCommands(_client: ClientExtended): Promise<void> {
+  async loadCommands(client: ClientExtended): Promise<void> {
     try {
       this.logger.info('CommandModule', 'Carregando módulo de Comandos.');
 
@@ -29,6 +29,7 @@ export class CommandModule {
 
       let loadedCommands = 0;
       let skippedCommands = 0;
+      let duplicateCommands = 0;
 
       commandFiles.forEach((filePath: string) => {
         try {
@@ -55,11 +56,29 @@ export class CommandModule {
             return;
           }
 
-          this.logger.info(
-            'CommandModule',
-            `✅ Carregado comando: ${name.toLowerCase()} - ${description}`,
-          );
-          loadedCommands++;
+          if (client.slashCommands && client.slashCommands.has(name)) {
+            this.logger.warn(
+              'CommandModule',
+              `⚠️ Comando duplicado: ${name} já existe, ignorando ${filePath}`,
+            );
+            duplicateCommands++;
+            return;
+          }
+
+          if (client.slashCommands) {
+            client.slashCommands.set(name, command);
+            this.logger.info(
+              'CommandModule',
+              `✅ Carregado comando: ${name.toLowerCase()} - ${description}`,
+            );
+            loadedCommands++;
+          } else {
+            this.logger.error(
+              'CommandModule',
+              `❌ client.slashCommands não está disponível para ${name}`,
+            );
+            skippedCommands++;
+          }
         } catch (error) {
           this.logger.error(
             'CommandModule',
@@ -71,7 +90,8 @@ export class CommandModule {
 
       this.logger.info(
         'CommandModule',
-        `📊 Resumo: ${loadedCommands} comandos carregados, ${skippedCommands} ignorados`,
+        `📊 Resumo: ${loadedCommands} comandos carregados, ${skippedCommands} ignorados, ` +
+          `${duplicateCommands} duplicados`,
       );
     } catch (error) {
       this.logger.error('CommandModule', `Erro ao carregar comandos: ${error}`);
