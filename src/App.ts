@@ -4,10 +4,10 @@ import { Logger } from '@/utils';
 import {
   ActivityModule,
   ButtonModule,
-  OnReadyModule,
-  CommandLoaderModule,
-  InteractionModule,
+  CommandModule,
   EmbedModule,
+  InteractionModule,
+  OnReadyModule,
 } from '@/modules';
 import { ClientExtended, CommandData } from '@/types';
 import { configDotenv } from 'dotenv';
@@ -39,7 +39,7 @@ export class App {
 
   private initializeModules(): void {
     new OnReadyModule(this.client);
-    new CommandLoaderModule(this.client).loadCommands();
+    new CommandModule(this.client).loadCommands(this.client);
     new ButtonModule(this.client).loadButtons(this.client);
   }
 

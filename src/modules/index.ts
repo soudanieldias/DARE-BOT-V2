@@ -2,6 +2,7 @@
 export * from './ActivityModule';
 export * from './BaseEmbed';
 export * from './ButtonModule';
+export * from './CommandModule';
 export * from './CommandLoaderModule';
 export * from './EmbedModule';
 export * from './InteractionModule';

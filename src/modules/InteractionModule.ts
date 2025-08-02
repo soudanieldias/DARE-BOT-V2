@@ -18,7 +18,7 @@ export class InteractionModule {
   initialize(
     client: Client<true>,
     slashCommands: Collection<string, CommandData>,
-  ) {
+  ): void {
     client.on(Events.InteractionCreate, async (interaction: Interaction) => {
       try {
         // Log para debug
