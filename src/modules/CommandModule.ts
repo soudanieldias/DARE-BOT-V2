@@ -1,6 +1,7 @@
 import { ClientExtended } from '@/types';
 import { Logger } from '@/utils';
 import { globSync } from 'fs';
+import { REST, Routes } from 'discord.js';
 
 export class CommandModule {
   private logger: Logger;
@@ -30,6 +31,7 @@ export class CommandModule {
       let loadedCommands = 0;
       let skippedCommands = 0;
       let duplicateCommands = 0;
+      const restCommands: any[] = [];
 
       commandFiles.forEach((filePath: string) => {
         try {
@@ -67,6 +69,7 @@ export class CommandModule {
 
           if (client.slashCommands) {
             client.slashCommands.set(name, command);
+            restCommands.push(command.data);
             this.logger.info(
               'CommandModule',
               `✅ Carregado comando: ${name.toLowerCase()} - ${description}`,
@@ -87,6 +90,31 @@ export class CommandModule {
           skippedCommands++;
         }
       });
+
+      if (restCommands.length > 0) {
+        try {
+          const rest = new REST({ version: '10' }).setToken(process.env.TOKEN!);
+
+          this.logger.info(
+            'CommandModule',
+            `🚀 Publicando ${restCommands.length} comandos na API do Discord...`,
+          );
+
+          await rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), {
+            body: restCommands,
+          });
+
+          this.logger.info(
+            'CommandModule',
+            '✅ Comandos publicados com sucesso na API do Discord!',
+          );
+        } catch (error) {
+          this.logger.error(
+            'CommandModule',
+            `❌ Erro ao publicar comandos na API: ${error}`,
+          );
+        }
+      }
 
       this.logger.info(
         'CommandModule',
