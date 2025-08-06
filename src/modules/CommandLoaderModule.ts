@@ -60,7 +60,7 @@ export class CommandLoaderModule {
 
           // Adicionar comando
           this.client.slashCommands!.set(name, command);
-          restCommands.push(command.data.toJSON());
+          restCommands.push(command.data);
 
           await this.client.logger!.info('Commands', `✓ ${name}`);
         } catch (error) {

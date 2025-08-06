@@ -19,10 +19,12 @@ model Users {
 }
 
 model Guilds {
-  id        String  @id @map("id")
+  id        String   @id @map("id")
   name      String
-  iconURL   String? @map("iconURL")
-  bannerURL String? @map("bannerURL")
+  iconURL   String?  @map("iconURL")
+  bannerURL String?  @map("bannerURL")
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
 
   @@map("Guilds")
 }

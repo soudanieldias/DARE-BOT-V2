@@ -4,13 +4,15 @@ import { globSync } from 'fs';
 import { REST, Routes } from 'discord.js';
 
 export class CommandModule {
-  private logger: Logger;
+  private readonly client: ClientExtended;
+  private readonly logger: Logger;
 
   constructor(client: ClientExtended) {
+    this.client = client;
     this.logger = new Logger(client);
   }
 
-  async loadCommands(client: ClientExtended): Promise<void> {
+  async initialize(): Promise<void> {
     try {
       this.logger.info('CommandModule', 'Carregando módulo de Comandos.');
 
@@ -58,7 +60,10 @@ export class CommandModule {
             return;
           }
 
-          if (client.slashCommands && client.slashCommands.has(name)) {
+          if (
+            this.client.slashCommands &&
+            this.client.slashCommands.has(name)
+          ) {
             this.logger.warn(
               'CommandModule',
               `⚠️ Comando duplicado: ${name} já existe, ignorando ${filePath}`,
@@ -67,8 +72,8 @@ export class CommandModule {
             return;
           }
 
-          if (client.slashCommands) {
-            client.slashCommands.set(name, command);
+          if (this.client.slashCommands) {
+            this.client.slashCommands.set(name, command);
             restCommands.push(command.data);
             this.logger.info(
               'CommandModule',
@@ -78,7 +83,7 @@ export class CommandModule {
           } else {
             this.logger.error(
               'CommandModule',
-              `❌ client.slashCommands não está disponível para ${name}`,
+              `❌ this.client.slashCommands não está disponível para ${name}`,
             );
             skippedCommands++;
           }

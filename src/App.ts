@@ -10,24 +10,28 @@ import {
   InteractionModule,
   OnReadyModule,
 } from '@/modules';
-import { ClientExtended, CommandData } from '@/types';
+import { ClientExtended } from '@/types';
 import { configDotenv } from 'dotenv';
+
 configDotenv();
 
 export class App {
-  private token: string = process.env.TOKEN || '';
-
-  private client: ClientExtended = new Client({
-    intents: [...intentsList],
-    partials: [...partialsList],
-  }) as ClientExtended;
-
-  private logger: Logger = new Logger(this.client);
+  private readonly token: string;
+  private readonly client: ClientExtended;
+  private readonly logger: Logger;
 
   constructor() {
+    this.token = process.env.TOKEN || '';
     if (!this.token) {
       throw new Error('TOKEN não configurado no arquivo .env');
     }
+
+    this.client = new Client({
+      intents: [...intentsList],
+      partials: [...partialsList],
+    }) as ClientExtended;
+
+    this.logger = new Logger(this.client);
   }
 
   private initializeClient(): void {
@@ -40,9 +44,9 @@ export class App {
   }
 
   private async initializeModules(): Promise<void> {
-    new OnReadyModule(this.client);
-    new CommandModule(this.client).loadCommands(this.client);
-    new ButtonModule(this.client).loadButtons(this.client);
+    new OnReadyModule(this.client).initialize();
+    new CommandModule(this.client).initialize();
+    new ButtonModule(this.client).initialize();
   }
 
   public async start(): Promise<void> {
@@ -50,11 +54,6 @@ export class App {
       await this.initializeClient();
       await this.initializeModules();
       await this.client.login(this.token);
-      await this.client.databaseModule!.initialize();
-      await this.client.interactionModule!.initialize(
-        this.client as Client<true>,
-        this.client.slashCommands as Collection<string, CommandData>,
-      );
     } catch (error) {
       await this.logger.error('App', `Erro ao iniciar a aplicação: ${error}`);
       throw error;

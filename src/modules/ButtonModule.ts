@@ -6,20 +6,21 @@ import path from 'path';
 import fs from 'fs/promises';
 
 export class ButtonModule {
-  private logger: Logger;
+  private readonly client: ClientExtended;
+  private readonly logger: Logger;
 
   constructor(client: ClientExtended) {
+    this.client = client;
     this.logger = new Logger(client);
   }
 
   /**
    * Carrega todos os botões dos arquivos TypeScript/JavaScript
    */
-  async loadButtons(client: ClientExtended) {
+  async initialize(): Promise<void> {
     try {
       await this.logger.info('ButtonModule', 'Carregando módulo de Botões.');
 
-      // Procurar por arquivos TypeScript (desenvolvimento) e JavaScript (produção)
       const buttonFiles = [
         ...globSync('./src/buttons/**/*.ts'),
         ...globSync('./dist/buttons/**/*.js'),
@@ -36,11 +37,9 @@ export class ButtonModule {
 
       for (const file of buttonFiles) {
         try {
-          // Usar import dinâmico para carregar o módulo
           const buttonModule = await import(path.resolve(file));
           const button: ButtonData = buttonModule.default || buttonModule;
 
-          // Verificar se o botão tem a estrutura necessária
           if (!button || !button.data || !button.data.customId) {
             await this.logger.warn(
               'ButtonModule',
@@ -51,8 +50,7 @@ export class ButtonModule {
 
           const { customId } = button.data;
 
-          // Verificar se já existe um botão com o mesmo ID
-          if (client.buttons?.has(customId)) {
+          if (this.client.buttons?.has(customId)) {
             await this.logger.error(
               'ButtonModule',
               `Já existe um botão carregado com o mesmo ID: ${customId} no arquivo: ${file}`,
@@ -60,8 +58,7 @@ export class ButtonModule {
             continue;
           }
 
-          // Adicionar o botão à coleção
-          client.buttons?.set(customId, button);
+          this.client.buttons?.set(customId, button);
           await this.logger.info(
             'ButtonModule',
             `Botão carregado: ${customId}`,
@@ -74,7 +71,7 @@ export class ButtonModule {
         }
       }
 
-      const buttonCount = client.buttons?.size || 0;
+      const buttonCount = this.client.buttons?.size || 0;
       await this.logger.info(
         'ButtonModule',
         `${buttonCount} botões carregados com sucesso.`,
@@ -87,9 +84,6 @@ export class ButtonModule {
     }
   }
 
-  /**
-   * Divide um array de botões em linhas com máximo de itens por linha
-   */
   async sliceButtonArray(
     originalItemsArray: ButtonBuilder[],
     maxItemsPerRow: number,
@@ -98,53 +92,47 @@ export class ButtonModule {
 
     const slicedResult = originalItemsArray.reduce((acc, item, index) => {
       const group = Math.floor(index / maxItemsPerRow);
-      acc[group] = [...(acc[group] || []), item];
+      if (!acc[group]) {
+        acc[group] = [];
+      }
+      acc[group].push(item);
       return acc;
     }, [] as ButtonBuilder[][]);
 
-    slicedResult.forEach(subArray => {
-      const actionRowBuilder =
-        new ActionRowBuilder<ButtonBuilder>().addComponents(subArray);
-      allRows.push(actionRowBuilder);
+    slicedResult.forEach(row => {
+      const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        row,
+      );
+      allRows.push(actionRow);
     });
 
     return allRows;
   }
 
-  /**
-   * Gera botões a partir de arquivos de áudio em um diretório
-   */
   async generateButtons(buttonsPath: string): Promise<ButtonBuilder[]> {
     try {
-      const audioFiles = (await fs.readdir(buttonsPath)).filter(
-        file => path.extname(file).toLowerCase() === '.mp3',
-      );
+      const buttonsData = await fs.readFile(buttonsPath, 'utf-8');
+      const buttonsConfig = JSON.parse(buttonsData);
 
-      const fileObjects = audioFiles.map(audio =>
-        new ButtonBuilder()
-          .setCustomId(audio.slice(0, -4))
-          .setLabel(audio.slice(0, -4))
-          .setStyle(ButtonStyle.Primary),
-      );
+      const buttons: ButtonBuilder[] = [];
 
-      await this.logger.info(
-        'ButtonModule',
-        `${fileObjects.length} botões de áudio gerados do diretório: ${buttonsPath}`,
-      );
+      for (const buttonConfig of buttonsConfig.buttons) {
+        const button = this.createButton(
+          buttonConfig.customId,
+          buttonConfig.label,
+          buttonConfig.style || ButtonStyle.Primary,
+          buttonConfig.disabled || false,
+        );
+        buttons.push(button);
+      }
 
-      return fileObjects;
+      return buttons;
     } catch (error) {
-      await this.logger.error(
-        'ButtonModule',
-        `Erro ao gerar botões do diretório ${buttonsPath}: ${error}`,
-      );
+      this.logger.error('ButtonModule', `Erro ao gerar botões: ${error}`);
       return [];
     }
   }
 
-  /**
-   * Método utilitário para criar um botão personalizado
-   */
   createButton(
     customId: string,
     label: string,
@@ -158,9 +146,6 @@ export class ButtonModule {
       .setDisabled(disabled);
   }
 
-  /**
-   * Método utilitário para criar uma ActionRow com botões
-   */
   createActionRow(buttons: ButtonBuilder[]): ActionRowBuilder<ButtonBuilder> {
     return new ActionRowBuilder<ButtonBuilder>().addComponents(buttons);
   }

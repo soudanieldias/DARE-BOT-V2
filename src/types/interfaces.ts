@@ -1,10 +1,13 @@
 import {
+  ApplicationCommandData,
+  ButtonBuilder,
   CacheType,
   ChatInputCommandInteraction,
   Client,
   Collection,
+  SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
-  ButtonBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
 } from 'discord.js';
 import {
   ActivityModule,
@@ -23,7 +26,11 @@ export interface Command {
 }
 
 export interface CommandData {
-  data: SlashCommandOptionsOnlyBuilder;
+  data:
+    | ApplicationCommandData
+    | SlashCommandBuilder
+    | SlashCommandOptionsOnlyBuilder
+    | SlashCommandSubcommandsOnlyBuilder;
   categories: string[];
   execute: (
     client: Client<true>,
@@ -76,11 +83,11 @@ export interface Config {
 export type ClientExtended = Client & {
   activityModule?: ActivityModule;
   buttons?: Collection<string, ButtonData>;
-  databaseModule?: DatabaseModule;
+  databaseModule: DatabaseModule;
   embedModule?: EmbedModule;
   interactionModule?: InteractionModule;
   logger?: Logger;
-  onReadyModule?: OnReadyModule;
+  onReadyModule: OnReadyModule;
   slashCommands?: Collection<string, CommandData>;
 };
 

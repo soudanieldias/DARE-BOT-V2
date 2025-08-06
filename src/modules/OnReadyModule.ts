@@ -1,24 +1,24 @@
-import { ClientExtended } from '@/types';
+import { ClientExtended, CommandData } from '@/types';
 import { Logger } from '@/utils';
+import { Client, Collection } from 'discord.js';
 
 export class OnReadyModule {
-  private client: ClientExtended;
-  private logger: Logger;
+  private readonly client: ClientExtended;
+  private readonly logger: Logger;
 
   constructor(client: ClientExtended) {
     this.client = client;
     this.logger = new Logger(client);
-    this.setupReadyEvent();
   }
 
-  private setupReadyEvent(): void {
+  async initialize(): Promise<void> {
     this.client.once('ready', async () => {
       const discriminator = this.client.user?.discriminator;
       const username = this.client.user?.username;
       const guildCount = this.client.guilds.cache.size;
       const userCount = this.client.users.cache.size;
 
-      await this.logger.info(
+      await console.info(
         'OnReady',
         `
         ------------------------------
@@ -37,6 +37,10 @@ export class OnReadyModule {
       );
 
       await this.client.databaseModule?.initialize();
+      await this.client.interactionModule?.initialize(
+        this.client as Client<true>,
+        this.client.slashCommands as Collection<string, CommandData>,
+      );
     });
   }
 }

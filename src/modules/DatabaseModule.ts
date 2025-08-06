@@ -3,9 +3,9 @@ import { Logger } from '@/utils';
 import { PrismaClient } from '@prisma/client';
 
 export class DatabaseModule {
-  private client: ClientExtended;
-  private logger: Logger;
-  public prisma: PrismaClient;
+  private readonly client: ClientExtended;
+  private readonly logger: Logger;
+  public readonly prisma: PrismaClient;
 
   constructor(client: ClientExtended) {
     this.client = client;
@@ -25,7 +25,7 @@ export class DatabaseModule {
 
   async populateServers(): Promise<void> {
     try {
-      const servers = this.client.guilds.cache.map((guild: any) => ({
+      const servers = this.client.guilds.cache.map(guild => ({
         id: guild.id,
         name: guild.name,
         iconURL: guild.icon,
@@ -51,16 +51,10 @@ export class DatabaseModule {
   async findGuildTicketConfig(guildId: string) {
     try {
       const ticketSettings = await this.prisma.settings.findUnique({
-        where: {
-          id: guildId,
-        },
+        where: { id: guildId },
       });
 
-      if (!ticketSettings) {
-        return null; // Retorna null ao invés de interaction.reply
-      } else {
-        return ticketSettings;
-      }
+      return ticketSettings || null;
     } catch (error) {
       await this.logger.error('Database', `Erro: ${error}`);
       return null;
@@ -69,13 +63,9 @@ export class DatabaseModule {
 
   async getGuildData(guildId: string) {
     try {
-      const ticketChannelData = await this.prisma.settings.findUnique({
-        where: {
-          id: guildId,
-        },
+      return await this.prisma.settings.findUnique({
+        where: { id: guildId },
       });
-
-      return ticketChannelData;
     } catch (error) {
       await this.logger.error('Database', `Erro no arquivo: ${error}`);
       return null;
@@ -86,7 +76,6 @@ export class DatabaseModule {
     await this.logger.error('Database', `Erro no arquivo: ${error}`);
   }
 
-  // Métodos para usuários (Users)
   async createUser(
     discordId: string,
     username: string,
@@ -126,7 +115,6 @@ export class DatabaseModule {
     }
   }
 
-  // Métodos para servidores (Guilds)
   async createGuild(
     discordId: string,
     name: string,
@@ -153,11 +141,10 @@ export class DatabaseModule {
     });
   }
 
-  async getAllGuilds() {
+  async getAllGuilds(): Promise<any[]> {
     return await this.prisma.guilds.findMany();
   }
 
-  // Métodos para configurações (Settings)
   async createSettings(
     guildId: string,
     settings: {
