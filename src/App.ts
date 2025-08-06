@@ -5,6 +5,7 @@ import {
   ActivityModule,
   ButtonModule,
   CommandModule,
+  DatabaseModule,
   EmbedModule,
   InteractionModule,
   OnReadyModule,
@@ -19,7 +20,7 @@ export class App {
   private client: ClientExtended = new Client({
     intents: [...intentsList],
     partials: [...partialsList],
-  });
+  }) as ClientExtended;
 
   private logger: Logger = new Logger(this.client);
 
@@ -32,12 +33,13 @@ export class App {
   private initializeClient(): void {
     this.client.logger = this.logger;
     this.client.slashCommands = new Collection();
+    this.client.databaseModule = new DatabaseModule(this.client);
     this.client.activityModule = new ActivityModule(this.client);
     this.client.interactionModule = new InteractionModule(this.client);
     this.client.embedModule = new EmbedModule(this.client);
   }
 
-  private initializeModules(): void {
+  private async initializeModules(): Promise<void> {
     new OnReadyModule(this.client);
     new CommandModule(this.client).loadCommands(this.client);
     new ButtonModule(this.client).loadButtons(this.client);
@@ -48,6 +50,7 @@ export class App {
       await this.initializeClient();
       await this.initializeModules();
       await this.client.login(this.token);
+      await this.client.databaseModule!.initialize();
       await this.client.interactionModule!.initialize(
         this.client as Client<true>,
         this.client.slashCommands as Collection<string, CommandData>,

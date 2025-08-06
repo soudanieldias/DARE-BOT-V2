@@ -35,6 +35,8 @@ export class OnReadyModule {
         ------------------------------
         `,
       );
+
+      await this.client.databaseModule?.initialize();
     });
   }
 }

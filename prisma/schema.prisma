@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String @id @map("id")
+  username String @unique
+  points   Int    @default(0)
+
+  @@map("Users")
+}
+
+model Guilds {
+  id        String  @id @map("id")
+  name      String
+  iconURL   String? @map("iconURL")
+  bannerURL String? @map("bannerURL")
+
+  @@map("Guilds")
+}
+
+model Settings {
+  id                   String   @id @map("id")
+  ownerId              String?  @map("ownerId")
+  staffChannelId       String?  @map("staffChannelId")
+  ticketChannelId      String?  @map("ticketChannelId")
+  announcesChannelId   String?  @map("announcesChannelId")
+  suggestionsChannelId String?  @map("suggestionsChannelId")
+  modRoleId            String?  @map("modRoleId")
+  ticketCategoryId     String?  @map("ticketCategoryId")
+  ticketLogsChannelId  String?  @map("ticketLogsChannelId")
+  ticketRoleId         String?  @map("ticketRoleId")
+  ticketTitle          String?  @map("ticketTitle")
+  ticketButtonName     String?  @map("ticketButtonName")
+  ticketDescription    String?  @map("ticketDescription") @db.Text
+  createdAt            DateTime @default(now()) @map("createdAt")
+  updatedAt            DateTime @updatedAt @map("updatedAt")
+
+  @@map("Settings")
+}

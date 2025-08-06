@@ -11,6 +11,7 @@ import {
   InteractionModule,
   OnReadyModule,
   EmbedModule,
+  DatabaseModule,
 } from '@/modules';
 import { Logger } from '@/utils';
 
@@ -75,6 +76,7 @@ export interface Config {
 export type ClientExtended = Client & {
   activityModule?: ActivityModule;
   buttons?: Collection<string, ButtonData>;
+  databaseModule?: DatabaseModule;
   embedModule?: EmbedModule;
   interactionModule?: InteractionModule;
   logger?: Logger;
