@@ -21,20 +21,21 @@ export class OnReadyModule {
       const botName = discriminator
         ? `${username}#${discriminator}`
         : username || 'Unknown';
-        const guildList = this.client.guilds.cache
-        .map(guild => `  🎮 ${guild.name}`);
+      const guildList = this.client.guilds.cache.map(
+        guild => `  🎮 ${guild.name}`,
+      );
 
-        const commandsCount = this.client.slashCommands?.size || 0;
-        const buttonsCount = this.client.buttons?.size || 0;
+      const commandsCount = this.client.slashCommands?.size || 0;
+      const buttonsCount = this.client.buttons?.size || 0;
 
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
       await this.logger.info('OnReadyModule', `🚀 DARE-BOT V2 ONLINE 🚀`);
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
       await this.logger.info('OnReadyModule', `👤 Bot: ${botName}`);
       await this.logger.info('OnReadyModule', `🏠 Servidores: ${guildCount}`);
@@ -42,43 +43,40 @@ export class OnReadyModule {
       await this.logger.info('OnReadyModule', `⏰ Status: Online ✅`);
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
       await this.logger.info('OnReadyModule', `📍 SERVIDORES ATIVOS 📍`);
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
-      guildList.map((guild) => this.logger.info('OnReadyModule', `${guild}`));
+      guildList.map(guild => this.logger.info('OnReadyModule', `${guild}`));
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
+      await this.logger.info('OnReadyModule', `🗄️  Database: Conectado`);
       await this.logger.info(
         'OnReadyModule',
-        `🗄️  Database: Conectado`
-      );
-      await this.logger.info(
-        'OnReadyModule',
-        `⚡Commands: ${commandsCount || 0} carregados`
+        `⚡Commands: ${commandsCount || 0} carregados`,
       );
       await this.logger.info(
         'OnReadyModule',
-        `🔘 Buttons: ${buttonsCount} carregados`
+        `🔘 Buttons: ${buttonsCount} carregados`,
       );
       await this.logger.info('OnReadyModule', `🎯 Interactions: Ativo`);
       await this.logger.info('OnReadyModule', `🎨 Embeds: Pronto`);
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
       await this.logger.info(
         'OnReadyModule',
-        `🎉 DARE-BOT V2 está online e operacional! 🎉`
+        `🎉 DARE-BOT V2 está online e operacional! 🎉`,
       );
       await this.logger.info(
         'OnReadyModule',
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       );
 
       await this.client.databaseModule?.initialize();

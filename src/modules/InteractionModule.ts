@@ -21,18 +21,8 @@ export class InteractionModule {
   ): void {
     client.on(Events.InteractionCreate, async (interaction: Interaction) => {
       try {
-        // Log para debug
-        await this.logger.info(
-          'InteractionModule',
-          `Tipo de interação: ${interaction.type}`,
-        );
-
         // Tratamento de Select Menu
         if (interaction.isStringSelectMenu()) {
-          await this.logger.info(
-            'InteractionModule',
-            'Interação detectada: Select Menu',
-          );
           return await interaction.reply({
             content: 'Funcionalidade não implementada ainda',
             flags: [MessageFlags.Ephemeral],
@@ -41,10 +31,6 @@ export class InteractionModule {
 
         // Tratamento de Botões
         if (interaction.isButton()) {
-          await this.logger.info(
-            'InteractionModule',
-            `Botão clicado: ${interaction.customId}`,
-          );
           return await interaction.reply({
             content: 'Funcionalidade não implementada ainda',
             flags: [MessageFlags.Ephemeral],
@@ -53,10 +39,6 @@ export class InteractionModule {
 
         // Tratamento de Modal Submit
         if (interaction.isModalSubmit()) {
-          await this.logger.info(
-            'InteractionModule',
-            `Modal submetido: ${interaction.customId}`,
-          );
           return await interaction.reply({
             content: 'Funcionalidade não implementada ainda',
             flags: [MessageFlags.Ephemeral],
@@ -65,17 +47,9 @@ export class InteractionModule {
 
         // Tratamento de Comandos Slash
         if (interaction.isChatInputCommand()) {
-          await this.logger.info(
-            'InteractionModule',
-            `Comando executado: ${interaction.commandName}`,
-          );
           const command = slashCommands.get(interaction.commandName);
 
           if (!command) {
-            await this.logger.error(
-              'InteractionModule',
-              `Comando ${interaction.commandName} não encontrado`,
-            );
             return interaction.reply({
               content: 'Erro ao executar o comando: NÃO ENCONTRADO',
               flags: [MessageFlags.Ephemeral],

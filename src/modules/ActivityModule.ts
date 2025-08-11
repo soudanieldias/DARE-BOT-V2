@@ -15,8 +15,6 @@ export class ActivityModule {
   constructor(client: Client) {
     this.client = client;
     this.logger = new Logger(client);
-
-    // Inicializar atividade padrão quando o bot ficar online
     client.once('ready', () => {
       this.setDefaultActivity();
     });
