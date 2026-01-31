@@ -1,0 +1,9 @@
+# DARE-bot v4 - Regras de codificação
+
+- Estrutura Clean Architecture: core (entidades), application (use cases), infra (discord, database, shared).
+- Comandos em src/infra/discord/commands/{dev,features,help,music,staff}.
+- Eventos em src/infra/discord/events/; config e utils em src/infra/shared/.
+- Tipos globais e extensões Discord.js em src/@types/.
+- Código autodocumentado: nomes semânticos, sem comentários desnecessários.
+- Princípios SOLID; responsabilidade única; inversão de dependência (depender de abstrações).
+- Lógica de negócio em core/application; efeitos (Discord, DB) em infra.

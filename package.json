@@ -1,0 +1,42 @@
+{
+  "name": "dare-bot",
+  "version": "4.0.0",
+  "description": "DARE-bot v4 - Bot de gerenciamento de comunidade no Discord",
+  "main": "dist/main.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec \"ts-node src/main.ts\"",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "discord.js": "^14.16.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.3.0",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.15.0",
+    "vitest": "^4.0.18"
+  }
+}
