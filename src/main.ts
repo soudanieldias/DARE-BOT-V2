@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { getDiscordClient } from './infra/discord/client';
+import { getDiscordClient } from '@/infra/discord/client';
 import {
   LoadCommands,
   OnReady,
@@ -7,20 +7,26 @@ import {
   OnMessageCreate,
   SetActivity,
   DBConnect,
-} from './infra/discord/events';
-import { config } from './infra/shared/config';
+} from '@/infra/discord/events';
+import { config } from '@/infra/shared/config';
 
-const client = getDiscordClient();
+async function bootstrap(): Promise<void> {
+  console.log('[INFO] Starting DareBot...');
 
-LoadCommands(client);
-OnInteraction(client);
-OnMessageCreate(client);
-SetActivity(client);
-DBConnect();
+  const client = getDiscordClient();
 
-const token = config.discord.token;
-if (!token) {
-  throw new Error('DISCORD_TOKEN is required');
+  await DBConnect();
+  LoadCommands(client);
+  OnInteraction(client);
+  OnMessageCreate(client);
+  SetActivity(client);
+
+  const token = config.discord.token;
+  if (!token) {
+    throw new Error('DISCORD_TOKEN is required');
+  }
+
+  OnReady(client, token);
 }
 
-OnReady(client, token);
+bootstrap();
