@@ -6,8 +6,7 @@ import {
   OnMessageCreateModule,
   OnReadyModule,
   SetActivityModule,
-  SoundpadsModule,
-} from '@/modules/bootstrap';
+} from '@/modules';
 import { config } from '@/shared/config';
 import { logger } from '@/shared/logger';
 
@@ -21,7 +20,7 @@ export class App {
     new OnInteractionModule(client).bootstrap();
     new OnMessageCreateModule(client).bootstrap();
     new SetActivityModule(client).bootstrap();
-    new SoundpadsModule(client).bootstrap();
+    client.soundpadModule.bootstrap(client);
 
     const token = config.discord.token;
     if (!token) throw new Error('DISCORD_TOKEN is required');

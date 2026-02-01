@@ -1,7 +1,7 @@
 # DARE-bot v4 - Regras de codificação
 
 - Comandos em src/commands/{dev,features,help,music,staff}.
-- Eventos em src/events/; módulos em src/modules/ (bootstrap, ButtonModule, SoundModule, SoundpadModule).
+- Eventos em src/events/; módulos em src/modules/ (ButtonModule, SoundModule, SoundpadModule).
 - Database em src/database/: entities, repositories, data-source, client.
 - Config e logger em src/shared/.
 - Tipos globais e extensões Discord.js em src/@types/.

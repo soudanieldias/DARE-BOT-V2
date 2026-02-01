@@ -30,6 +30,14 @@ export interface DareClient extends Client {
 export class SoundpadModule {
   private buttonModule = new ButtonModule();
 
+  bootstrap(client: DareClient): void {
+    client.once('clientReady', async () => {
+      logger.info('Soundpad', 'Inicializando Soundpads...');
+      await this.start(client);
+      logger.info('Soundpad', 'Soundpads Inicializados com Sucesso!');
+    });
+  }
+
   async listSoundpads(client: DareClient, interaction: StringSelectMenuInteraction): Promise<void> {
     const [value] = interaction.values;
     const config = SOUNDPAD_PATHS[value];
