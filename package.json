@@ -14,16 +14,19 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "db:migrate": "npm run typeorm -- migration:run -d src/infra/database/data-source.ts",
+    "db:migrate:generate": "npm run typeorm -- migration:generate -d src/infra/database/data-source.ts",
+    "db:migrate:revert": "npm run typeorm -- migration:revert -d src/infra/database/data-source.ts",
+    "db:schema:sync": "npm run typeorm -- schema:sync -d src/infra/database/data-source.ts",
     "test": "vitest run"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
     "discord.js": "^14.16.0",
-    "dotenv": "^16.4.0"
+    "dotenv": "^16.4.0",
+    "mysql2": "^3.11.0",
+    "reflect-metadata": "^0.2.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
@@ -33,7 +36,6 @@
     "eslint-plugin-prettier": "^5.2.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.3.0",
-    "prisma": "^5.22.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.15.0",

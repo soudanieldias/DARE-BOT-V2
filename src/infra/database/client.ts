@@ -1,3 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { AppDataSource } from './data-source';
 
-export const prisma = new PrismaClient();
+export async function getDataSource() {
+  if (!AppDataSource.isInitialized) {
+    await AppDataSource.initialize();
+  }
+  return AppDataSource;
+}
+
+export { AppDataSource };
