@@ -4,7 +4,7 @@ import { allCommands } from '@/commands';
 import { config } from '@/shared/config';
 import type { DareClient } from '@/modules/SoundpadModule';
 
-export async function LoadCommands(client: DareClient): Promise<void> {
+export async function LoadCommands(_client: DareClient): Promise<void> {
   console.log('[Commands] Carregando Módulo de Comandos');
   const token = config.discord.token;
   const clientId = config.discord.clientId;

@@ -9,7 +9,9 @@ export interface SlashCommand {
   data: { name: string; toJSON: () => unknown };
   execute: (
     client: DareClient,
-    interaction: import('discord.js').ChatInputCommandInteraction | import('discord.js').ButtonInteraction
+    interaction:
+      | import('discord.js').ChatInputCommandInteraction
+      | import('discord.js').ButtonInteraction
   ) => Promise<void>;
 }
 

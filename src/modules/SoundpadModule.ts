@@ -1,11 +1,7 @@
 import { glob } from 'glob';
 import path from 'path';
 import { MessageFlags } from 'discord.js';
-import type {
-  Client,
-  StringSelectMenuInteraction,
-  TextChannel,
-} from 'discord.js';
+import type { Client, StringSelectMenuInteraction, TextChannel } from 'discord.js';
 import { log } from '@/shared/logger';
 import { ButtonModule } from './ButtonModule';
 
@@ -34,10 +30,7 @@ export interface DareClient extends Client {
 export class SoundpadModule {
   private buttonModule = new ButtonModule();
 
-  async listSoundpads(
-    client: DareClient,
-    interaction: StringSelectMenuInteraction
-  ): Promise<void> {
+  async listSoundpads(client: DareClient, interaction: StringSelectMenuInteraction): Promise<void> {
     const [value] = interaction.values;
     const config = SOUNDPAD_PATHS[value];
     if (!config) return;

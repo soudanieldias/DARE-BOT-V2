@@ -51,22 +51,16 @@ export class SoundModule {
 
     const existingConn = this.connections.get(guildId);
     const existingChannelId = existingConn?.joinConfig.channelId;
-    if (
-      existingConn &&
-      existingChannelId &&
-      existingChannelId !== member.voice.channel?.id
-    ) {
-      const botChannel = member.guild.channels.cache.get(
-        existingChannelId
-      ) as VoiceChannel | undefined;
+    if (existingConn && existingChannelId && existingChannelId !== member.voice.channel?.id) {
+      const botChannel = member.guild.channels.cache.get(existingChannelId) as
+        | VoiceChannel
+        | undefined;
       if (botChannel && botChannel.members.size > 1) {
         throw new Error('O bot já está conectado a outro canal de voz.');
       }
     }
 
-    const connection = joinVoiceChannel(
-      params as Parameters<typeof joinVoiceChannel>[0]
-    );
+    const connection = joinVoiceChannel(params as Parameters<typeof joinVoiceChannel>[0]);
     this.connections.set(guildId, connection);
 
     connection.on(VoiceConnectionStatus.Disconnected, () => {
