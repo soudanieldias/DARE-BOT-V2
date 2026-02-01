@@ -2,3 +2,8 @@ node_modules/
 .env
 dist/
 *.log
+
+sandbox/
+
+src/audios/**/*.mp3
+src/audios/**/*.wav

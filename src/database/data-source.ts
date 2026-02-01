@@ -13,6 +13,6 @@ export const AppDataSource = new DataSource({
   synchronize: process.env.NODE_ENV !== 'production',
   logging: process.env.DATABASE_LOGGING === 'true',
   entities: [Guild, User, Member, GuildSettings],
-  migrations: ['src/infra/database/migrations/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
   subscribers: [],
 });
