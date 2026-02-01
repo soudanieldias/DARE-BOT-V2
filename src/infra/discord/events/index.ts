@@ -1,14 +1,22 @@
 import { ActivityType, type Client } from 'discord.js';
 import { getDataSource } from '@/infra/database/client';
 
-export function LoadCommands(client: Client): void {
+export function LoadCommands(_client: Client): void {
   console.log('[Commands] Carregando Módulo de Comandos');
   // TODO: carregar comandos slash
   console.log('[Commands] Módulo de Comandos Carregado com Sucesso');
 }
 
 export function OnReady(client: Client, token: string): void {
-  client.on('ready', () => {
+  client.on('clientReady', () => {
+    const guilds = client.guilds.cache;
+    const guildList = [...guilds.values()]
+      .map((guild, i) => {
+        const branch = i === guilds.size - 1 ? '└──' : '├──';
+        return `      ${branch} ${guild.name}`;
+      })
+      .join('\n');
+
     console.log(`
       Bot Online!
       Username: ${client.user?.tag}
@@ -17,7 +25,7 @@ export function OnReady(client: Client, token: string): void {
       Operando em ${client.guilds.cache.size} Servidores
       ------------------------------
       Lista de Guilds:
-      ${client.guilds.cache.map((guild) => guild.name).join('\n')}
+      ${guildList || '      (nenhuma guild)'}
       ------------------------------
     `);
   });
@@ -29,7 +37,7 @@ export function OnInteraction(_client: Client): void {}
 export function OnMessageCreate(_client: Client): void {}
 
 export function SetActivity(client: Client): void {
-  client.once('ready', () => {
+  client.once('clientReady', () => {
     console.log('[Activity] Inicializando Activity do BOT.');
     client.user?.setActivity('AVE DARE', {
       type: ActivityType.Streaming,

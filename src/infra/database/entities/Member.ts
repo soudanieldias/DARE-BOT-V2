@@ -1,20 +1,13 @@
-import {
-  Entity,
-  PrimaryColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { Guild } from './Guild';
 import { User } from './User';
 
 @Entity('members')
 export class Member {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 255 })
   userId!: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 255 })
   guildId!: string;
 
   @ManyToOne(() => User, (user) => user.members, { onDelete: 'CASCADE' })

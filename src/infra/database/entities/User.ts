@@ -3,10 +3,10 @@ import { Member } from './Member';
 
 @Entity('users')
 export class User {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 255 })
   id!: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   username!: string;
 
   @Column({ default: 0 })
