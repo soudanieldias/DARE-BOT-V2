@@ -1,5 +1,6 @@
 import { MessageFlags } from 'discord.js';
 import { commandMap } from '@/commands';
+import { logger } from '@/shared/logger';
 import type { DareClient } from '@/modules/SoundpadModule';
 
 export class OnInteractionModule {
@@ -26,7 +27,7 @@ export class OnInteractionModule {
           if (command) return command.execute(this.client, interaction);
         }
       } catch (error) {
-        console.error('[Interaction] Erro:', error);
+        logger.error('Interaction', error);
         const reply = { content: 'Erro ao executar o comando.', flags: [MessageFlags.Ephemeral] };
         if ('replied' in interaction && interaction.replied) {
           await (interaction as { followUp: (o: object) => Promise<unknown> })

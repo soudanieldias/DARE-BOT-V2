@@ -15,4 +15,5 @@ export const AppDataSource = new DataSource({
   entities: [Guild, User, Member, GuildSettings],
   migrations: ['src/database/migrations/*.ts'],
   subscribers: [],
+  extra: { connectTimeout: 10_000 },
 });

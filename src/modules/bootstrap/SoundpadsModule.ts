@@ -1,3 +1,4 @@
+import { logger } from '@/shared/logger';
 import type { DareClient } from '@/modules/SoundpadModule';
 
 export class SoundpadsModule {
@@ -5,9 +6,9 @@ export class SoundpadsModule {
 
   bootstrap(): void {
     this.client.once('clientReady', async () => {
-      console.log('[Soundpads] Inicializando Soundpads...');
+      logger.info('Soundpads', 'Inicializando Soundpads...');
       await this.client.soundpadModule.start(this.client);
-      console.log('[Soundpads] Soundpads Inicializados com Sucesso!');
+      logger.info('Soundpads', 'Soundpads Inicializados com Sucesso!');
     });
   }
 }

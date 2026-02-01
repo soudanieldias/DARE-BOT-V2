@@ -2,7 +2,7 @@ import { glob } from 'glob';
 import path from 'path';
 import { MessageFlags } from 'discord.js';
 import type { Client, StringSelectMenuInteraction, TextChannel } from 'discord.js';
-import { log } from '@/shared/logger';
+import { logger } from '@/shared/logger';
 import { ButtonModule } from './ButtonModule';
 
 export const SOUNDPAD_CATEGORIES = [
@@ -57,7 +57,7 @@ export class SoundpadModule {
 
   async start(client: DareClient): Promise<void> {
     try {
-      log('SoundPad', 'Inicializando Soundpad.');
+      logger.info('SoundPad', 'Inicializando Soundpad.');
       const audioFiles = await glob('src/audios/**/*.mp3', { cwd: process.cwd() });
 
       for (const file of audioFiles) {
@@ -67,13 +67,13 @@ export class SoundpadModule {
         if (!client.pads.has(fileName)) {
           client.pads.set(fileName, { name: fileName, path: fullPath });
         } else {
-          log('SoundPad', `Arquivo duplicado ignorado: "${fileName}" (${file})`);
+          logger.warn('SoundPad', `Arquivo duplicado ignorado: "${fileName}" (${file})`);
         }
       }
 
-      log('SoundPad', `Soundpad inicializado: ${client.pads.size} pads carregados.`);
+      logger.info('SoundPad', `Soundpad inicializado: ${client.pads.size} pads carregados.`);
     } catch (error) {
-      log('SoundPad', `Erro: ${error instanceof Error ? error.message : String(error)}`);
+      logger.error('SoundPad', `Erro: ${error instanceof Error ? error.message : String(error)}`);
       throw error;
     }
   }

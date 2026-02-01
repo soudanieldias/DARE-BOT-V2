@@ -1,2 +1,2 @@
 export { config } from './config';
-export { log } from './logger';
+export { Logger, logger } from './logger';

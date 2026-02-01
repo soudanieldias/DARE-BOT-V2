@@ -1,13 +1,14 @@
 import { getDataSource } from '@/database/client';
+import { logger } from '@/shared/logger';
 
 export class DatabaseModule {
   async bootstrap(): Promise<void> {
     try {
-      console.log('[DataBase] Inicializando MySQL...');
+      logger.info('DataBase', 'Inicializando MySQL...');
       await getDataSource();
-      console.log('[DataBase] MySQL Inicializado com Sucesso!');
+      logger.info('DataBase', 'MySQL Inicializado com Sucesso!');
     } catch (error) {
-      console.error('[DataBase] Erro ao conectar:', error);
+      logger.error('DataBase', error);
     }
   }
 }

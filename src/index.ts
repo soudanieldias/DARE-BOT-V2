@@ -1,4 +1,4 @@
 import 'dotenv/config';
 import { App } from './App';
 
-new App().start();
+new App().bootstrap();

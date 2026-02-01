@@ -1,3 +1,4 @@
+import { logger } from '@/shared/logger';
 import type { DareClient } from '@/modules/SoundpadModule';
 
 export class OnReadyModule {
@@ -16,7 +17,9 @@ export class OnReadyModule {
         })
         .join('\n');
 
-      console.log(`
+      logger.info(
+        'OnReady',
+        `
       Bot Online!
       Username: ${this.client.user?.tag}
       ------------------------------
@@ -26,8 +29,14 @@ export class OnReadyModule {
       Lista de Guilds:
       ${guildList || '      (nenhuma guild)'}
       ------------------------------
-    `);
+    `
+      );
     });
+
+    if (!this.token) {
+      throw new Error('DISCORD_TOKEN is required');
+    }
+
     this.client.login(this.token);
   }
 }

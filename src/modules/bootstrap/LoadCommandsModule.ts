@@ -1,18 +1,19 @@
 import { REST, Routes } from 'discord.js';
 import { allCommands } from '@/commands';
 import { config } from '@/shared/config';
+import { logger } from '@/shared/logger';
 import type { DareClient } from '@/modules/SoundpadModule';
 
 export class LoadCommandsModule {
   constructor(private readonly client: DareClient) {}
 
   async bootstrap(): Promise<void> {
-    console.log('[Commands] Carregando Módulo de Comandos');
+    logger.info('Commands', 'Carregando Módulo de Comandos');
     const token = config.discord.token;
     const clientId = config.discord.clientId;
 
     if (!clientId) {
-      console.warn('[Commands] DISCORD_CLIENT_ID não configurado - comandos não registrados');
+      logger.warn('Commands', 'DISCORD_CLIENT_ID não configurado - comandos não registrados');
       return;
     }
 
@@ -21,11 +22,12 @@ export class LoadCommandsModule {
 
     try {
       await rest.put(Routes.applicationCommands(clientId), { body });
-      console.log(
-        `[Commands] Módulo de Comandos Carregado com Sucesso (${allCommands.length} comandos)`
+      logger.info(
+        'Commands',
+        `Módulo de Comandos Carregado com Sucesso (${allCommands.length} comandos)`
       );
     } catch (error) {
-      console.error('[Commands] Erro ao registrar comandos:', error);
+      logger.error('Commands', error);
     }
   }
 }
