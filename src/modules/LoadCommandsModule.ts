@@ -2,7 +2,7 @@ import { REST, Routes } from 'discord.js';
 import { allCommands } from '@/commands';
 import { config } from '@/shared/config';
 import { logger } from '@/shared/logger';
-import type { DareClient } from '@/modules/SoundpadModule';
+import { DareClient } from '@/interfaces';
 
 export class LoadCommandsModule {
   constructor(private readonly client: DareClient) {}

@@ -6,4 +6,4 @@ export { OnMessageCreateModule } from './OnMessageCreateModule';
 export { OnReadyModule } from './OnReadyModule';
 export { SetActivityModule } from './SetActivityModule';
 export { SoundModule } from './SoundModule';
-export { SoundpadModule, SOUNDPAD_CATEGORIES, type DareClient } from './SoundpadModule';
+export { SoundpadModule, SOUNDPAD_CATEGORIES } from './SoundpadModule';

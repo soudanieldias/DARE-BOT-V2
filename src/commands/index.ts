@@ -1,4 +1,4 @@
-import type { DareClient } from '../modules/SoundpadModule';
+import { DareClient } from '@/interfaces';
 import * as dev from './dev';
 import * as features from './features';
 import * as help from './help';

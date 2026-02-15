@@ -1,6 +1,6 @@
 import { ActivityType } from 'discord.js';
 import { logger } from '@/shared/logger';
-import type { DareClient } from '@/modules/SoundpadModule';
+import type { DareClient } from '@/interfaces';
 
 export class SetActivityModule {
   constructor(private readonly client: DareClient) {}

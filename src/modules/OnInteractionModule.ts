@@ -1,7 +1,7 @@
 import { MessageFlags } from 'discord.js';
 import { commandMap } from '@/commands';
 import { logger } from '@/shared/logger';
-import type { DareClient } from '@/modules/SoundpadModule';
+import type { DareClient } from '@/interfaces';
 
 export class OnInteractionModule {
   constructor(private readonly client: DareClient) {}

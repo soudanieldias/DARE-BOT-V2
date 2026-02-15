@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "node16",
+    "moduleResolution": "node16",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
@@ -14,6 +13,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": false,
+    "moduleDetection": "force",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

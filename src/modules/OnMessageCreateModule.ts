@@ -1,4 +1,4 @@
-import type { DareClient } from '@/modules/SoundpadModule';
+import type { DareClient } from '@/interfaces';
 
 export class OnMessageCreateModule {
   constructor(private readonly client: DareClient) {}
