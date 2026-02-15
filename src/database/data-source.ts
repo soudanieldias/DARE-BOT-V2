@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
-import { Guild, User, Member, GuildSettings } from './entities';
+import { Guild, User, Member, GuildSettings } from '@/database/entities';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',

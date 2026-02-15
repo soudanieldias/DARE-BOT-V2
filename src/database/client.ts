@@ -1,4 +1,4 @@
-import { AppDataSource } from './data-source';
+import { AppDataSource } from '@/database';
 
 export async function getDataSource() {
   if (!AppDataSource.isInitialized) {
@@ -6,5 +6,3 @@ export async function getDataSource() {
   }
   return AppDataSource;
 }
-
-export { AppDataSource };

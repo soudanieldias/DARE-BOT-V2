@@ -1,7 +1,5 @@
 import { Client, GatewayIntentBits } from 'discord.js';
-import { SoundpadModule } from './modules/SoundpadModule';
-import { SoundModule } from './modules/SoundModule';
-import type { DareClient } from './modules/SoundpadModule';
+import { SoundModule, SoundpadModule, DareClient } from '@/modules';
 
 const intents = [
   GatewayIntentBits.Guilds,

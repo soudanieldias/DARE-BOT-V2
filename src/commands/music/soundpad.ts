@@ -7,8 +7,8 @@ import {
   type ChatInputCommandInteraction,
   type ButtonInteraction,
 } from 'discord.js';
-import { SOUNDPAD_CATEGORIES } from '../../modules';
-import type { DareClient } from '../../modules/SoundpadModule';
+import { SOUNDPAD_CATEGORIES } from '@/modules';
+import type { DareClient } from '@/interfaces';
 
 export const soundpadCommand = {
   data: new SlashCommandBuilder()

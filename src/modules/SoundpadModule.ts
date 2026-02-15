@@ -3,9 +3,10 @@ import path from 'path';
 import { MessageFlags } from 'discord.js';
 import type { Client, StringSelectMenuInteraction, TextChannel } from 'discord.js';
 import { logger } from '@/shared/logger';
-import { ButtonModule } from './ButtonModule';
+import { ButtonModule } from '@/modules';
+import type { DareClient } from '@/interfaces';
 
-export const SOUNDPAD_CATEGORIES = [
+export const SOUNDPAD_CATEGORIES: Array<{ label: string; value: string }> = [
   { label: 'audios', value: 'spad_audios' },
   { label: 'frases', value: 'spad_frases' },
   { label: 'memes', value: 'spad_memes' },
@@ -20,12 +21,6 @@ const SOUNDPAD_PATHS: Record<string, { path: string; category: string }> = {
   spad_musicas: { path: 'src/audios/musicas', category: 'musicas' },
   spad_times: { path: 'src/audios/times', category: 'times' },
 };
-
-export interface DareClient extends Client {
-  pads: Map<string, { name: string; path: string }>;
-  soundpadModule: SoundpadModule;
-  soundModule: import('./SoundModule').SoundModule;
-}
 
 export class SoundpadModule {
   private buttonModule = new ButtonModule();

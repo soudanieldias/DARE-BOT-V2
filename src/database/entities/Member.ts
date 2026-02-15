@@ -1,6 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
-import { Guild } from './Guild';
-import { User } from './User';
+import { Guild, User } from '@/database/entities';
 
 @Entity('members')
 export class Member {

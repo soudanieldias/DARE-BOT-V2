@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
-import { Member } from './Member';
+import { Member } from '@/database/entities';
 
 @Entity('users')
 export class User {

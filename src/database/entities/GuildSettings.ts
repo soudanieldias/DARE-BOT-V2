@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Guild } from './Guild';
+import { Guild } from '@/database/entities';
 
 @Entity('guild_settings')
 export class GuildSettings {
