@@ -8,7 +8,7 @@ export class SetActivityModule {
   bootstrap(): void {
     this.client.once('clientReady', () => {
       logger.info('Activity', 'Inicializando Activity do BOT.');
-      this.client.user?.setActivity('AVE DARE', {
+      this.client.user?.setActivity('BOLADINHO!', {
         type: ActivityType.Streaming,
         url: 'https://diasitservices.com.br/',
       });
