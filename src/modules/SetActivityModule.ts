@@ -16,4 +16,12 @@ export class SetActivityModule {
       logger.info('Activity', 'Activity Carregada com Sucesso.');
     });
   }
+
+  updateActivity(activity: string, type: ActivityType): void {
+    this.client.user?.setActivity(activity, {
+      type,
+      url: 'https://diasitservices.com.br/',
+    });
+    logger.info('Activity', `Activity atualizada para: ${activity} (${ActivityType[type]})`);
+  }
 }
