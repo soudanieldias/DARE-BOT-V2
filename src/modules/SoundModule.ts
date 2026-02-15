@@ -71,12 +71,12 @@ export class SoundModule {
     });
 
     const resource = createAudioResource(pad.path, { inlineVolume: true });
-    if (resource.volume) resource.volume.setVolume(0.1);
+    if (resource.volume) resource.volume.setVolume(0.5);
 
     player.on(AudioPlayerStatus.Idle, () => this.cleanup(guildId));
     player.on('error', () => this.cleanup(guildId));
 
-    connection.subscribe(player);
+    await connection.subscribe(player);
     player.play(resource);
   }
 
