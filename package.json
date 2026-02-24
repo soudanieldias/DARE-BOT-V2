@@ -1,53 +1,25 @@
 {
   "name": "dare-bot",
-  "version": "4.0.0",
-  "description": "DARE-bot v4 - Bot de gerenciamento de comunidade no Discord",
-  "main": "dist/index.js",
-  "engines": {
-    "node": ">=18"
-  },
+  "version": "5.0.0",
+  "private": true,
+  "description": "DARE-bot v5 - Bot Discord + Painel Admin",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec \"ts-node -r tsconfig-paths/register src/index.ts\"",
-    "build": "tsc && tsc-alias -p tsconfig.json",
-    "start": "node dist/index.js",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\"",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "db:migrate": "npm run typeorm -- migration:run -d src/database/data-source.ts",
-    "db:migrate:generate": "npm run typeorm -- migration:generate -d src/database/data-source.ts",
-    "db:migrate:revert": "npm run typeorm -- migration:revert -d src/database/data-source.ts",
-    "db:schema:sync": "npm run typeorm -- schema:sync -d src/database/data-source.ts",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@discordjs/opus": "^0.10.0",
-    "@discordjs/voice": "^0.19.0",
-    "@snazzah/davey": "^0.1.9",
-    "colors": "^1.4.0",
-    "discord.js": "^14.25.1",
-    "dotenv": "^17.2.3",
-    "glob": "^13.0.0",
-    "mysql2": "^3.16.2",
-    "opusscript": "^0.0.8",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.28"
+    "dev": "concurrently -n bot,web -c blue,green \"pnpm --filter @dare-bot/bot dev\" \"pnpm --filter @dare-bot/web dev\"",
+    "dev:bot": "pnpm --filter @dare-bot/bot dev",
+    "dev:web": "pnpm --filter @dare-bot/web dev",
+    "build": "pnpm -r build",
+    "build:bot": "pnpm --filter @dare-bot/bot build",
+    "build:web": "pnpm --filter @dare-bot/web build",
+    "db:migrate": "pnpm --filter @dare-bot/database db:migrate",
+    "db:migrate:generate": "pnpm --filter @dare-bot/database db:migrate:generate",
+    "db:migrate:revert": "pnpm --filter @dare-bot/database db:migrate:revert",
+    "db:schema:sync": "pnpm --filter @dare-bot/database db:schema:sync",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json}\""
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@types/node": "^25.1.0",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "nodemon": "^3.1.11",
-    "prettier": "^3.8.1",
-    "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.16",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0",
-    "vitest": "^4.0.18"
+    "concurrently": "^9.1.2",
+    "prettier": "^3.8.1"
   },
   "packageManager": "pnpm@10.28.2"
 }

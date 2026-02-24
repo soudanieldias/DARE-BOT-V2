@@ -1,0 +1,27 @@
+{
+  "name": "@dare-bot/database",
+  "version": "5.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "pnpm build",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "db:migrate": "pnpm typeorm migration:run -d src/data-source.ts",
+    "db:migrate:generate": "pnpm typeorm migration:generate -d src/data-source.ts",
+    "db:migrate:revert": "pnpm typeorm migration:revert -d src/data-source.ts",
+    "db:schema:sync": "pnpm typeorm schema:sync -d src/data-source.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -5,5 +5,7 @@ dist/
 
 sandbox/
 
-src/audios/**/*.mp3
-src/audios/**/*.wav
+.env.local
+.env*.local
+**/audios/**/*.mp3
+**/audios/**/*.wav
